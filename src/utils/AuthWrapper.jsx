@@ -6,22 +6,23 @@ import { addUserInfo, removeUserInfo } from "../utils/userSlice";
 import { useEffect } from "react";
 
 export default function AuthLayout() {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        const unsub = onAuthStateChanged(auth, (user) => {
-            if (user) {
-                dispatch(addUserInfo({ email: user.email, name: user.displayName }));
-                navigate("/browse");
-            } else {
-                dispatch(removeUserInfo());
-                navigate("/login");
-            }
-        });
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        dispatch(addUserInfo({ email: user.email, name: user.displayName }));
+        navigate("/browse");
+      } else {
+        dispatch(removeUserInfo());
+        navigate("/login");
+      }
+    });
 
-        return () => unsub();
-    }, []);
+    // Cleanup subscription on unmount
+    return () => unsub();
+  }, []);
 
-    return <Outlet />;
+  return <Outlet />;
 }

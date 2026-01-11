@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getAuth } from 'firebase/auth';
+import { getAuth } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -14,7 +14,7 @@ const firebaseConfig = {
   storageBucket: "movie-gpt-dac20.firebasestorage.app",
   messagingSenderId: "317428207446",
   appId: "1:317428207446:web:a26f03f4aeee0a81d410f7",
-  measurementId: "G-XKPPMFBND9"
+  measurementId: "G-XKPPMFBND9",
 };
 
 // Initialize Firebase

@@ -1,10 +1,19 @@
-import React from 'react'
-import Header from './Header'
+import React from "react";
+import Header from "./Header";
+import usePlayMovieAPI from "../hooks/usePlayMovieAPI";
+import TrailerBrowse from "./TrailerBrowse";
+import MovieBrowse from "./MovieBrowse";
 
 const Browse = () => {
-  return (
-    <div><Header /></div>
-  )
-}
+  const movieList = usePlayMovieAPI();
 
-export default Browse
+  return (
+    <>
+      <Header />
+      <TrailerBrowse movies={movieList} />
+      <MovieBrowse />
+    </>
+  );
+};
+
+export default Browse;
