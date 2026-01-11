@@ -4,6 +4,17 @@
   box-sizing: border-box;
 }
 
+/* Hide scrollbar but keep scroll */
+.hide-scrollbar {
+  -ms-overflow-style: none;     /* IE & Edge */
+  scrollbar-width: none;        /* Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;                /* Chrome, Safari */
+}
+
+
 .bg-home {
   background-image: url("https://assets.nflxext.com/ffe/siteui/vlv3/a92a67ee-cd07-46a8-8354-c431a96a97b0/web/IN-en-20251103-TRIFECTA-perspective_8a65e995-9926-414c-83c5-f7cc9af10871_medium.jpg");
 }

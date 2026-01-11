@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 const TrailerText = () => {
   const movieText = useSelector((state) => state?.movie?.movieForTrailer);
   return (
-    <div className="flex flex-col gap-4 !justify-end !pt-[15%] !px-16 !pb-12">
+    <div className="flex flex-col gap-4 !justify-end !py-[12%] !px-16">
       <h1 className="text-4xl font-bold text-white">{movieText?.title}</h1>
       <p className="w-1/4 text-white !font-light">{movieText?.overview}</p>
       <div className="flex gap-6 !mt-5">
