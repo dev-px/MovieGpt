@@ -31,7 +31,7 @@ const Login = () => {
         createUserWithEmailAndPassword(
           auth,
           email.current.value,
-          password.current.value
+          password.current.value,
         )
           .then(() => {
             updateProfile(auth.currentUser, {
@@ -56,7 +56,7 @@ const Login = () => {
         signInWithEmailAndPassword(
           auth,
           email.current.value,
-          password.current.value
+          password.current.value,
         )
           .then((userCredential) => {
             // Signed in

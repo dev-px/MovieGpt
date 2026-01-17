@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { Language } from "firebase/ai";
 
 export const userSlice = createSlice({
   name: "user",
@@ -9,7 +10,7 @@ export const userSlice = createSlice({
     },
     removeUserInfo: () => {
       return null;
-    },
+    }
   },
 });
 
