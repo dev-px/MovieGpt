@@ -7,10 +7,10 @@ export const options = {
   headers: {
     accept: "application/json",
     Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3M2RiNzdjOWMxYTU5NjEyNjU2ZmJjNTMzMWI2MzBmMSIsIm5iZiI6MTc2ODAzODk0Mi4wNzEsInN1YiI6IjY5NjIyMjFlYjQ4MTRkYmM1ZDU5NjRkOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.UJoRt4teo_Y6rpuRtIb_g_0gpg9F0NeNN6FHvj_tNto",
+      "Bearer " + import.meta.env.VITE_TMDB_API_KEY,
   },
 };
-export const lang = {"en":"English", "hi":"हिन्दी"};
+export const lang = { "en": "English", "hi": "हिन्दी" };
 export const translateLang = {
   en: {
     "Sign In": "Sign In",
