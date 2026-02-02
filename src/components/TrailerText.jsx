@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { translateLang } from "../utils/constant";
+import { translateLang } from "../utils/Constant";
 
 const TrailerText = () => {
   const movieText = useSelector((state) => state?.movie?.movieForTrailer);

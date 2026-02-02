@@ -1,6 +1,6 @@
 import { options } from "../utils/constant";
 import { useDispatch, useSelector } from "react-redux";
-import { addMovieList } from "../utils/movieSlice";
+import { addMovieList } from "../utils/store/movieSlice";
 import { useEffect } from "react";
 
 const usePlayMovieAPI = () => {

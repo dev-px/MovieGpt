@@ -8,7 +8,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { useDispatch } from "react-redux";
-import { addUserInfo } from "../utils/userSlice";
+import { addUserInfo } from "../utils/store/userSlice";
 import { NTFLX_BG } from "../utils/constant";
 
 const Login = () => {
@@ -73,85 +73,97 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div className="relative min-h-screen w-full">
       <Header />
-      <img src={NTFLX_BG} alt="Background" className="absolute" />
 
-      <div className="bg-[rgba(0,0,0,0.75)] max-w-md w-1/2 !p-12 relative left-1/3 top-24 text-white">
-        <h1 className="text-5xl !text-left font-bold">
-          {isSignedUp ? "Sign Up" : "Sign In"}
-        </h1>
-        <div className="flex flex-col items-center w-full">
-          <form
-            onSubmit={(e) => e.preventDefault()}
-            action=""
-            className="w-[100%]"
-          >
+      {/* Background */}
+      <img
+        src={NTFLX_BG}
+        alt="Background"
+        className="absolute inset-0 object-cover h-full w-full"
+      />
+      <div className="absolute bg-black/50 inset-0 " />
+
+      {/* Form Wrapper */}
+      <div className="relative z-10 flex min-h-screen items-center justify-center px-4 sm:px-6 pt-24">
+        <div className="w-full max-w-md rounded-sm bg-black/75 p-6 sm:p-8 md:p-10 text-white">
+          <h1 className="mb-6 text-3xl sm:text-4xl font-bold">
+            {isSignedUp ? "Sign Up" : "Sign In"}
+          </h1>
+
+          <form onSubmit={(e) => e.preventDefault()} className="space-y-4">
             {isSignedUp && (
               <input
                 type="text"
                 ref={fullName}
-                className="!p-3 bg-black/80 w-full !mt-8 placeholder:text-gray-300 rounded-sm focus:outline-white focus:outline-2 focus:m-4 outline-1 outline-gray-500"
-                placeholder="Full name"
+                placeholder="John Doe"
+                className="text-white placeholder-gray-400 outline w-full rounded-sm bg-black/80 p-3 outline-gray-500 focus:outline-2 focus:outline-white"
               />
             )}
-            <div className="!my-8">
+
+            <div>
               <input
                 type="email"
                 ref={email}
-                className="!p-3 bg-black/80 w-full placeholder:text-gray-300 rounded-sm focus:outline-white focus:outline-2 focus:m-4 outline-1 outline-gray-500"
-                placeholder="Email or mobile number"
+                placeholder="john.doe@example.com"
+                className="bg-black/80 p-3 text-white w-full rounded-sm placeholder-gray-400 outline outline-gray-500 focus:outline-2 focus:outline-white"
               />
-              <p className="text-red-700 p-2 text-md !py-0 !my-0 font-semibold">
-                {errorMessage?.email}
-              </p>
+              {errorMessage?.email && (
+                <p className="mt-1 text-sm font-semibold text-red-600">
+                  {errorMessage.email}
+                </p>
+              )}
             </div>
-            <div className="!my-8">
+
+            <div>
               <input
                 type="password"
                 ref={password}
-                className="!p-3 bg-black/80 w-full placeholder:text-gray-300 rounded-sm focus:outline-white focus:outline-2 focus:m-4 outline-1 outline-gray-500"
-                placeholder="Password"
+                placeholder="●●●●●●●●●●"
+                className="w-full rounded-sm bg-black/80 p-3 text-white placeholder-gray-400 outline outline-gray-500 focus:outline-2 focus:outline-white"
               />
-              <p className="text-red-700 p-2 text-md !py-0 !my-0 font-semibold">
-                {errorMessage?.password}
-              </p>
+              {errorMessage?.password && (
+                <p className="mt-1 text-sm font-semibold text-red-600">
+                  {errorMessage.password}
+                </p>
+              )}
             </div>
-            <input
-              type="submit"
-              value={`${isSignedUp ? "Sign Up" : "Sign In"}`}
-              className="!p-2.5 bg-red-700 text-white hover:bg-red-800 w-full"
+
+            <button
               onClick={handleSubmit}
-            />
-            <p className="hover:underline hover:underline-offset-2 text-white text-center hover:cursor-pointer font-semibold !my-5">
+              className="mt-4 w-full rounded-sm bg-red-600 p-3 font-semibold hover:bg-red-700"
+            >
+              {isSignedUp ? "Sign Up" : "Sign In"}
+            </button>
+
+            <p className="hover:underline text-center text-sm mt-2  cursor-pointer">
               Forgot password?
             </p>
           </form>
-        </div>
-        <div className="flex items-center gap-3 !my-5">
-          <input
-            type="checkbox"
-            id="remember"
-            className="h-4 w-4 cursor-pointer accent-white"
-          />
-          <label
-            htmlFor="remember"
-            className="text-white ml-2 cursor-pointer font-normal"
-          >
-            {" "}
-            Remember me{" "}
-          </label>
-        </div>
 
-        <p className="text-md mx-auto hover:underline-offset-2 text-white">
-          {isSignedUp ? "Already have an account?" : "New to Netflix?"}{" "}
-          <span
-            className="hover:underline hover:underline-offset-2 text-white font-semibold cursor-pointer"
-            onClick={handleSignUp}
-          >
-            {isSignedUp ? "Sign in now." : "Sign up now."}
-          </span>
-        </p>
+          {/* Remember me */}
+          <div className="mt-4 flex items-center gap-2 text-sm">
+            <input
+              type="checkbox"
+              id="remember"
+              className="cursor-pointer h-4 w-4 accent-white"
+            />
+            <label htmlFor="remember" className="cursor-pointer">
+              Remember me
+            </label>
+          </div>
+
+          {/* Toggle */}
+          <p className="mt-6 text-sm text-gray-300">
+            {isSignedUp ? "Already have an account?" : "New to Netflix?"}{" "}
+            <span
+              className="cursor-pointer font-semibold text-white hover:underline"
+              onClick={handleSignUp}
+            >
+              {isSignedUp ? "Sign in now." : "Sign up now."}
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   );
