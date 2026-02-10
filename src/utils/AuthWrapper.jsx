@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { addUserInfo, removeUserInfo } from "./store/userSlice";
 import { useEffect } from "react";
 import { resetMovieSate } from "./store/movieSlice";
+import Header from "../components/Header";
 
 export default function AuthLayout() {
     const dispatch = useDispatch();
@@ -26,7 +27,12 @@ export default function AuthLayout() {
     }, [dispatch, navigate]);
 
     // renders ProtectedLayout OR login etc. based on route definition in App.jsx
-    return <Outlet />;
+    return (
+        <>
+            <Header />
+            <Outlet />
+        </>
+    )
 }
 
 // This AuthLayout component listens for Firebase authentication state changes and

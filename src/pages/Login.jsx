@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import Header from "./Header";
+import Header from "../components/Header";
 import { signInValidation } from "../utils/Validate";
 import { auth } from "../utils/API/Firebase";
 import {
@@ -9,7 +9,7 @@ import {
 } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { addUserInfo } from "../utils/store/userSlice";
-import { NTFLX_BG } from "../utils/constant";
+import Background from "../components/Background";
 
 const Login = () => {
   const [isSignedUp, setIsSignedUp] = useState(false);
@@ -71,15 +71,9 @@ const Login = () => {
 
   return (
     <div className="relative min-h-screen w-full">
-      <Header />
 
       {/* Background */}
-      <img
-        src={NTFLX_BG}
-        alt="Background"
-        className="absolute inset-0 object-cover h-full w-full"
-      />
-      <div className="absolute bg-black/50 inset-0 " />
+      <Background />
 
       {/* Form Wrapper */}
       <div className="relative z-10 flex min-h-screen items-center justify-center px-4 sm:px-6 pt-24">

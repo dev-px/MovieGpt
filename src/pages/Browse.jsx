@@ -1,15 +1,14 @@
 import React from "react";
-import Header from "./Header";
+import Header from "../components/Header";
 import usePlayMovieAPI from "../hooks/usePlayMovieAPI";
-import TrailerBrowse from "./TrailerBrowse";
-import MovieBrowse from "./MovieBrowse";
+import TrailerBrowse from "../components/TrailerBrowse";
+import MovieBrowse from "../components/MovieBrowse";
 
 const Browse = () => {
   const movieList = usePlayMovieAPI();
 
   return (
     <>
-      <Header />
       <TrailerBrowse movies={movieList} />
       <MovieBrowse />
     </>

@@ -16,6 +16,8 @@ const Header = () => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const langPref = useSelector((state) => state?.appPrefernce.language);
+
+  // handle user sign out
   const handleSignOut = () => {
     signOut(auth).then(() => {
       console.log("User signed out successfully");

@@ -1,12 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
-import Header from "./Header";
+import Header from "../components/Header";
 import { useDispatch, useSelector } from "react-redux";
 import { resetState, setSearchTitleList, setTmdbMovieList } from "../utils/store/gptSlice";
 import ai from "../utils/API/geminiAPI";
 import useGeminiMovieSearch from "../hooks/useGeminiMovieSearch";
 import { useLocation } from "react-router-dom";
-import MovieBrowseCard from "./MovieBrowseCard";
+import MovieBrowseCard from "../components/MovieBrowseCard";
 import { NTFLX_BG, translateLang } from "../utils/constant";
+import Background from "../components/Background";
 
 const GptSearch = () => {
   const searchText = useRef(null);
@@ -24,7 +25,7 @@ const GptSearch = () => {
   const OnSearchMovie = async () => {
     const query = searchText.current?.value?.trim();
     if (!query) return;
-    //   open AI API call for movie search
+    // gemini API call for movie search
     try {
       const SearchMovie = async () => {
         const searchQUeryText =
@@ -105,9 +106,10 @@ const GptSearch = () => {
   }, []);
 
   return (
-    <>
-      <Header />
-      <img src={NTFLX_BG} alt="Background" className="absolute -z-20" />
+    <div className="relative min-h-screen w-full">
+
+      {/* Background */}
+      <Background />
 
       <div className="flex flex-col gap-4 items-center !pt-[12%] !z-10">
         <h1 className="text-3xl font-extrabold text-white">
@@ -136,7 +138,7 @@ const GptSearch = () => {
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 };
 
