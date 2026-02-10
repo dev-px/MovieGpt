@@ -2,11 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import Header from "./Header";
 import { useDispatch, useSelector } from "react-redux";
 import { resetState, setSearchTitleList, setTmdbMovieList } from "../utils/store/gptSlice";
-import ai from "../utils/GeminiAPI";
+import ai from "../utils/API/geminiAPI";
 import useGeminiMovieSearch from "../hooks/useGeminiMovieSearch";
 import { useLocation } from "react-router-dom";
 import MovieBrowseCard from "./MovieBrowseCard";
-import { NTFLX_BG, translateLang  } from "../utils/constant";
+import { NTFLX_BG, translateLang } from "../utils/constant";
 
 const GptSearch = () => {
   const searchText = useRef(null);

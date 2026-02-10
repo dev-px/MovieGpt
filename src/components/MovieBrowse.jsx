@@ -4,7 +4,7 @@ import useUpcomingMovieAPI from "../hooks/useUpcomingAPI";
 import { useSelector } from "react-redux";
 import usePopularAPI from "../hooks/usePopularAPI";
 import useTopRatedAPI from "../hooks/useTopRatedAPI";
-import { translateLang } from "../utils/Constant";
+import { translateLang } from "../utils/constant";
 
 const MovieBrowse = () => {
   const movies = useSelector((state) => state?.movie?.movieList);

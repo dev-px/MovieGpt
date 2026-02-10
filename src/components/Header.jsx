@@ -1,9 +1,9 @@
 import { signOut } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { auth } from "../utils/Firebase";
+import { auth } from "../utils/API/Firebase";
 import { removeUserInfo } from "../utils/store/userSlice";
-import {lang, NTLFX_Logo,  translateLang } from './../utils/constant';
+import { lang, NTLFX_Logo, translateLang } from './../utils/constant';
 import { useLocation, useNavigate } from "react-router-dom";
 import { setUserPreferredLanguage } from "../utils/store/appPrefernceSlice";
 import { resetMovieSate } from "../utils/store/movieSlice";
@@ -17,13 +17,12 @@ const Header = () => {
   const dispatch = useDispatch();
   const langPref = useSelector((state) => state?.appPrefernce.language);
   const handleSignOut = () => {
-    signOut(auth)
-      .then(() => {
-        console.log("User signed out successfully");
-        dispatch(removeUserInfo());
-        dispatch(setUserPreferredLanguage("en"));
-        dispatch(resetMovieSate());
-      })
+    signOut(auth).then(() => {
+      console.log("User signed out successfully");
+      dispatch(removeUserInfo());
+      dispatch(setUserPreferredLanguage("en"));
+      dispatch(resetMovieSate());
+    })
       .catch((error) => {
         // navigate to error page or show error message
         console.log("Error signing out:", error);

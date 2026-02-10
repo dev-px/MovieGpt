@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import Header from "./Header";
 import { signInValidation } from "../utils/Validate";
-import { auth } from "../utils/Firebase";
+import { auth } from "../utils/API/Firebase";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -32,21 +32,19 @@ const Login = () => {
           auth,
           email.current.value,
           password.current.value,
-        )
-          .then(() => {
-            updateProfile(auth.currentUser, {
-              displayName: fullName.current.value,
-            })
-              .then(() => {
-                const { email, displayName } = auth.currentUser;
-                dispatch(addUserInfo({ email: email, name: displayName }));
-              })
-              .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log(errorCode, errorMessage);
-              });
+        ).then(() => {
+          updateProfile(auth.currentUser, {
+            displayName: fullName.current.value,
+          }).then(() => {
+            const { email, displayName } = auth.currentUser;
+            dispatch(addUserInfo({ email: email, name: displayName }));
           })
+            .catch((error) => {
+              const errorCode = error.code;
+              const errorMessage = error.message;
+              console.log(errorCode, errorMessage);
+            });
+        })
           .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
@@ -57,12 +55,11 @@ const Login = () => {
           auth,
           email.current.value,
           password.current.value,
-        )
-          .then((userCredential) => {
-            // Signed in
-            const user = userCredential.user;
-            console.log("user logged in:", user);
-          })
+        ).then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          console.log("user logged in:", user);
+        })
           .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;

@@ -1,30 +1,32 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../utils/Firebase";
+import { auth } from "./API/Firebase";
 import { useDispatch } from "react-redux";
 import { addUserInfo, removeUserInfo } from "./store/userSlice";
 import { useEffect } from "react";
 import { resetMovieSate } from "./store/movieSlice";
 
 export default function AuthLayout() {
-  const dispatch = useDispatch();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-  useEffect(() => {
-    const unsub = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        dispatch(addUserInfo({ email: user.email, name: user.displayName }));
-      } else {
-        dispatch(removeUserInfo());
-        dispatch(resetMovieSate());
-      }
-    });
+    useEffect(() => {
+        const unsub = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                dispatch(addUserInfo({ email: user.email, name: user.displayName }));
+                navigate("/browse");
+            } else {
+                dispatch(removeUserInfo());
+                dispatch(resetMovieSate());
+                navigate("/login");
+            }
+        });
+        // Cleanup subscription on unmount
+        return () => unsub();
+    }, [dispatch, navigate]);
 
-    // Cleanup subscription on unmount
-    return () => unsub();
-  }, []);
-  
-  // renders ProtectedLayout OR login etc. based on route definition in App.jsx
-  return <Outlet />;
+    // renders ProtectedLayout OR login etc. based on route definition in App.jsx
+    return <Outlet />;
 }
 
 // This AuthLayout component listens for Firebase authentication state changes and
