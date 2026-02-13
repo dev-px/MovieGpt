@@ -36,8 +36,12 @@ export const translateLang = {
     "Popular Movies": "Popular Movies",
     "Now Playing Movies": "Now Playing Movies",
     "Trending Movies": "Trending Movies",
-    "Play": "Play",
-    "More Info": "More Info"
+    "Watch Now": "Watch Now",
+    "More Info": "More Info",
+    "Searching": "Searching...",
+    "Loading": "Loading...",
+    "Search Results": "Search Results:",
+    "AI Recommendation": "AI Recommendation",
   },
   hi: {
     "Sign In": "साइन इन करें",
@@ -63,7 +67,11 @@ export const translateLang = {
     "Popular Movies": "लोकप्रिय फिल्में",
     "Now Playing Movies": "अब चल रही फिल्में",
     "Trending Movies": "प्रवृत्त फिल्में",
-    "Play": "चलाएं",
-    "More Info": "अधिक जानकारी"
+    "Watch Now": "अभी देखें",
+    "More Info": "अधिक जानकारी",
+    "Searching...": "खोज रहा है...",
+    "Loading...": "लोड हो रहा है...",
+    "Search Results": "खोज परिणाम:",
+    "AI Recommendation": "AI अनुशंसा"
   },
 };

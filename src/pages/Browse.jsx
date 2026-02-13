@@ -1,5 +1,4 @@
 import React from "react";
-import Header from "../components/Header";
 import usePlayMovieAPI from "../hooks/usePlayMovieAPI";
 import TrailerBrowse from "../components/TrailerBrowse";
 import MovieBrowse from "../components/MovieBrowse";

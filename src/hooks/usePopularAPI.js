@@ -1,10 +1,11 @@
-import { options } from "../utils/constant";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { options } from "../utils/Constant";
 import { addPopularMovieList } from "../utils/store/movieSlice";
-import { useEffect } from "react";
 
 const usePopularAPI = () => {
   const dispatch = useDispatch();
+  const [popularLoading, setPopularLoading] = useState(true);
   const movie = useSelector((state) => state?.movie?.popularMovieList);
 
   useEffect(() => {
@@ -15,11 +16,12 @@ const usePopularAPI = () => {
       );
       const movieData = await data.json();
       dispatch(addPopularMovieList(movieData?.results));
+      if (movieData) setPopularLoading(false);
     };
     popularMovie();
   }, [dispatch]);
 
-  return movie;
+  return { popularMovie: movie, popularLoading };
 };
 
 export default usePopularAPI;

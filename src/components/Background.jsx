@@ -1,5 +1,5 @@
 import React from 'react'
-import { NTFLX_BG } from '../utils/constant'
+import { NTFLX_BG } from '../utils/Constant'
 
 const Background = () => {
     return (

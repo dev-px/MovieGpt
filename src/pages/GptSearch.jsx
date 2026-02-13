@@ -1,32 +1,35 @@
 import React, { useEffect, useRef, useState } from "react";
-import Header from "../components/Header";
 import { useDispatch, useSelector } from "react-redux";
 import { resetState, setSearchTitleList, setTmdbMovieList } from "../utils/store/gptSlice";
 import ai from "../utils/API/geminiAPI";
 import useGeminiMovieSearch from "../hooks/useGeminiMovieSearch";
 import { useLocation } from "react-router-dom";
 import MovieBrowseCard from "../components/MovieBrowseCard";
-import { NTFLX_BG, translateLang } from "../utils/constant";
 import Background from "../components/Background";
+import { toast } from "react-toastify";
+import { translator } from "../utils/Helper";
 
 const GptSearch = () => {
   const searchText = useRef(null);
   const location = useLocation();
+  const [loading, setLoading] = useState(false);
   const [placeHolderText, setPlaceHolderText] = useState(
     "Type your movie mood...",
   );
   const langPref = useSelector((state) => state?.appPrefernce.language);
-  const transLang = translateLang[langPref];
   const dispatch = useDispatch();
   const gptMovie = useSelector((state) => state?.gpt?.gptList);
   const searchMovieListResult = useSelector((state) => state?.gpt?.searchMovieList);
   const fetchTmdbAPI = useGeminiMovieSearch();
 
-  const OnSearchMovie = async () => {
+  // call gemini API to get movie suggestions based on user input
+  const OnSearchMovie = async (event) => {
+    event.preventDefault();
     const query = searchText.current?.value?.trim();
     if (!query) return;
     // gemini API call for movie search
     try {
+      setLoading(true);
       const SearchMovie = async () => {
         const searchQUeryText =
           "Find me some movies related to the following description and you must act as movie expert: " +
@@ -45,8 +48,9 @@ const GptSearch = () => {
         dispatch(setSearchTitleList(titles));
       };
       await SearchMovie();
-    } catch (error) {
-      console.log(error);
+    } catch {
+      toast.error("Failed to fetch movie suggestions. Please try again.");
+      setLoading(false);
     }
   };
 
@@ -54,7 +58,10 @@ const GptSearch = () => {
   useEffect(() => {
     // after fetching the data call tmdb API to get movie details
     const call = async () => {
-      if (!gptMovie) return;
+      if (!gptMovie || gptMovie.length === 0) {
+        setLoading(false);
+        return;
+      }
       const results = await fetchTmdbAPI(gptMovie);
       const normalize = str =>
         str.toLowerCase().replace(/[^a-z0-9]/g, "");
@@ -78,7 +85,7 @@ const GptSearch = () => {
 
         return scoredMovies[0];
       }).filter(Boolean);
-
+      setLoading(false);
       dispatch(setTmdbMovieList(cleanedData));
     };
     call();
@@ -101,7 +108,7 @@ const GptSearch = () => {
     const intervalId = setInterval(() => {
       setPlaceHolderText(placeholders[index]);
       index = (index + 1) % placeholders.length;
-    }, 3000);
+    }, 2000);
     return () => clearInterval(intervalId);
   }, []);
 
@@ -111,30 +118,40 @@ const GptSearch = () => {
       {/* Background */}
       <Background />
 
-      <div className="flex flex-col gap-4 items-center !pt-[12%] !z-10">
+      <div className="flex flex-col gap-4 items-center justify-center mt-32 absolute w-full">
         <h1 className="text-3xl font-extrabold text-white">
-          {transLang?.["Confused? We may help you!"]}
+          {translator(langPref, "Confused? We may help you!")}
         </h1>
 
-        <div className="flex justify-center items-center gap-4 w-1/2 bg-black !px-4 !py-3 rounded-xs">
+
+        {/* Movie Recommendation search */}
+        <form className="flex justify-center items-center gap-4 w-1/2 bg-black !px-4 !py-3 rounded-xs" onSubmit={OnSearchMovie}>
           <input
             type="text"
             className="!px-3 !py-2.5 bg-white rounded-md w-10/12"
-            placeholder={transLang?.[placeHolderText]}
+            placeholder={translator(langPref, placeHolderText)}
             ref={searchText}
+            disabled={loading}
           />
+
+          {/* button for search */}
           <button
             type="submit"
-            className="!px-4 !py-2.5 bg-red-600 text-white rounded-md hover:bg-red-800 hover:cursor-pointer w-2/12"
-            onClick={OnSearchMovie}
+            className={`px-4 py-2.5 rounded-md w-2/12 text-white ${loading
+              ? "bg-red-600/80 cursor-not-allowed"
+              : "bg-red-600 hover:bg-red-800 cursor-pointer"
+              }`}
+            disabled={loading}
           >
-            {transLang?.["Search"]}
+            {loading ? translator(langPref, "Searching") : translator(langPref, "Search")}
           </button>
-        </div>
+        </form>
 
+
+        {/* Searched Movies */}
         {searchMovieListResult && searchMovieListResult.length > 0 && (
           <div className="!mt-14 w-full">
-            <MovieBrowseCard movie={searchMovieListResult} title={searchText.current?.value} showName={true} />
+            <MovieBrowseCard movie={searchMovieListResult} title={searchText.current?.value} showName={true} loading={loading} />
           </div>
         )}
       </div>

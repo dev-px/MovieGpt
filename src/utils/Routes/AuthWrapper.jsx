@@ -1,11 +1,11 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "./API/Firebase";
+import { auth } from "../API/firebase";
 import { useDispatch } from "react-redux";
-import { addUserInfo, removeUserInfo } from "./store/userSlice";
+import { addUserInfo, removeUserInfo } from "../store/userSlice";
 import { useEffect } from "react";
-import { resetMovieSate } from "./store/movieSlice";
-import Header from "../components/Header";
+import { resetMovieSate } from "../store/movieSlice";
+import Header from "../../components/Header";
 
 export default function AuthLayout() {
     const dispatch = useDispatch();

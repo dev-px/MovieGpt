@@ -1,4 +1,4 @@
-import { options } from "../utils/constant";
+import { options } from "../utils/Constant";
 
 const useTmdbMovieSearch = () => {
     const fetchTmdbAPI = async (movieTitles = []) => {

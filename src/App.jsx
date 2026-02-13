@@ -1,30 +1,14 @@
-import {
-  createBrowserRouter,
-  RouterProvider
-} from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
 import "./App.css";
-import Login from "./pages/Login.jsx";
-import Browse from "./pages/Browse.jsx";
-import GptSearch from "./pages/GptSearch.jsx";
-import AuthLayout from './utils/AuthWrapper';
-
-const router = createBrowserRouter([
-  {
-    element: <AuthLayout />,
-    children: [
-      { path: "/", element: <Login /> },
-      { path: "/login", element: <Login /> },
-      { path: "/browse", element: <Browse /> },
-      { path: "/search", element: <GptSearch /> },
-    ],
-  },
-]);
+import router from "./utils/Routes/routes.jsx";
+import Toast from "./components/Toast.jsx";
 
 function App() {
 
   return (
     <>
       <RouterProvider router={router} />
+      <Toast />
     </>
   );
 }

@@ -1,10 +1,11 @@
-import { options } from "../utils/constant";
+import { options } from "../utils/Constant";
 import { useDispatch, useSelector } from "react-redux";
 import { addUpcomingMovieList } from "../utils/store/movieSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const useUpcomingMovieAPI = () => {
   const dispatch = useDispatch();
+  const [upcomingLoading, setUpcomingLoading] = useState(true);
   const movie = useSelector((state) => state?.movie?.upcomingMovieList);
 
   useEffect(() => {
@@ -15,11 +16,12 @@ const useUpcomingMovieAPI = () => {
       );
       const movieData = await data.json();
       dispatch(addUpcomingMovieList(movieData?.results));
+      if (movieData?.results) setUpcomingLoading(false);
     };
     upcomingMovie();
   }, [dispatch]);
 
-  return movie;
+  return { upcomingMovie: movie, upcomingLoading };
 };
 
 export default useUpcomingMovieAPI;

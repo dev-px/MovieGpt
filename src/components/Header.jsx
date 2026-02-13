@@ -1,12 +1,14 @@
 import { signOut } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { auth } from "../utils/API/Firebase";
+import { auth } from "../utils/API/firebase";
 import { removeUserInfo } from "../utils/store/userSlice";
-import { lang, NTLFX_Logo, translateLang } from './../utils/constant';
+import { lang, NTLFX_Logo } from './../utils/Constant';
 import { useLocation, useNavigate } from "react-router-dom";
 import { setUserPreferredLanguage } from "../utils/store/appPrefernceSlice";
 import { resetMovieSate } from "../utils/store/movieSlice";
+import { toast } from "react-toastify";
+import { toastVisibilty, translator } from "../utils/Helper";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -20,15 +22,24 @@ const Header = () => {
   // handle user sign out
   const handleSignOut = () => {
     signOut(auth).then(() => {
-      console.log("User signed out successfully");
+      toast.success("Signed out successfully", toastVisibilty);
       dispatch(removeUserInfo());
       dispatch(setUserPreferredLanguage("en"));
       dispatch(resetMovieSate());
     })
-      .catch((error) => {
+      .catch(() => {
         // navigate to error page or show error message
-        console.log("Error signing out:", error);
+        toast.error("Error signing out", toastVisibilty);
       });
+  };
+
+  // handle logo click to navigate user to login page if not logged in and to browse page if logged in
+  const handleLogoClick = () => {
+    if (user) {
+      navigate("/browse");
+    } else {
+      navigate("/login");
+    }
   };
 
   // hide gpt search button on browse page only
@@ -39,11 +50,13 @@ const Header = () => {
   return (
     <header className="absolute bg-gradient-to-b from-black to-transparent w-full z-50">
       <div className="flex justify-between items-center">
+
+        {/* Netflix Logo */}
         <img
           src={NTLFX_Logo}
           alt="Netflix Logo"
           className="h-22 !ml-12 hover:cursor-pointer"
-          onClick={() => navigate("/browse")}
+          onClick={handleLogoClick}
         />
 
         <div className="flex items-center gap-4 !mr-16">
@@ -55,7 +68,7 @@ const Header = () => {
                     className="border border-white text-white font-medium !px-2.5 !py-1.5 rounded-md ml-4 hover:bg-white hover:text-black hover:cursor-pointer"
                     onClick={() => navigate("/search")}
                   >
-                    {translateLang[langPref]?.["What's Next?"]}
+                    {translator(langPref, "AI Recommendation")}
                   </button>
                 </div>
               ) : null}
@@ -70,11 +83,14 @@ const Header = () => {
                   onClick={handleSignOut}
                   className="hover:cursor-pointer bg-white text-black text-sm rounded-sm !px-2 !py-1 font-semibold hover:opacity-70 transition absolute top-16 right-32 "
                 >
-                  {translateLang[langPref]?.["Sign Out"]}
+                  {translator(langPref, "Sign Out")}
                 </div>
               )}
             </div>
           )}
+
+
+          {/* Language Selection */}
           <select
             className="text-white font-bold p-1 !border-0 outline-0 hover:cursor-pointer"
             value={langPref}

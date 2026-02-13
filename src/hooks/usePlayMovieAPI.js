@@ -1,4 +1,4 @@
-import { options } from "../utils/constant";
+import { options } from "../utils/Constant";
 import { useDispatch, useSelector } from "react-redux";
 import { addMovieList } from "../utils/store/movieSlice";
 import { useEffect } from "react";

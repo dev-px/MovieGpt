@@ -1,10 +1,11 @@
-import { options } from "../utils/constant";
+import { options } from "../utils/Constant";
 import { useDispatch, useSelector } from "react-redux";
 import { addTopRatedMovieList } from "../utils/store/movieSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const useTopRatedAPI = () => {
   const dispatch = useDispatch();
+  const [topRatedLoading, setTopRatedLoading] = useState(true);
   const movie = useSelector((state) => state?.movie?.topRatedMovieList);
 
   useEffect(() => {
@@ -15,11 +16,12 @@ const useTopRatedAPI = () => {
       );
       const movieData = await data.json();
       dispatch(addTopRatedMovieList(movieData?.results));
+      if (movieData) setTopRatedLoading(false);
     };
     topRatedMovie();
   }, [dispatch]);
 
-  return movie;
+  return { topRatedMovie: movie, topRatedLoading };
 };
 
 export default useTopRatedAPI;
