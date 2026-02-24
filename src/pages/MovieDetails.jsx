@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import useIndividualMovieDetail from "../hooks/useIndividualMovieDetail";
 import useTrailerPlayAPI from "../hooks/useTrailerPlayAPI";
 import Trailer from "../components/Trailer";
 import MovieDetailsShimmer from "../components/MovieDetailsShimmer";
+import ErrorUI from './../error/ErrorUI';
 
 // handle login logic
 // error handling for api calls
@@ -15,11 +16,10 @@ import MovieDetailsShimmer from "../components/MovieDetailsShimmer";
 const MovieDetails = () => {
     const { movieId } = useParams();
     const [play, setPlay] = useState(false);
-    const { movieDetails, detailsLoading } = useIndividualMovieDetail(movieId);
-    const [trailerKey, setTrailerKey] = useState(null);
-    const fnGetTrailerKey = useTrailerPlayAPI(movieId);
+    const { movieDetails, detailsLoading, detailsError } = useIndividualMovieDetail(movieId);
+    const { trailerKey, detailsLoader, error } = useTrailerPlayAPI(movieId);
+
     const {
-        id,
         title,
         backdrop_path,
         overview,
@@ -34,13 +34,6 @@ const MovieDetails = () => {
     } = movieDetails || {};
 
     const backdropURL = `https://image.tmdb.org/t/p/original${backdrop_path}`;
-    useEffect(() => {
-        const getTrailerKey = async () => {
-            const data = await fnGetTrailerKey(id);
-            if (data) setTrailerKey(data);
-        };
-        getTrailerKey();
-    }, [play])
 
     const heroMeta = [
         vote_average && `⭐ ${vote_average.toFixed(1)}`,
@@ -78,8 +71,16 @@ const MovieDetails = () => {
             fullWidth: true,
         },
     ].filter((item) => item.value);
+    console.log( movieDetails, detailsLoading, detailsError)
 
     if (detailsLoading) return <MovieDetailsShimmer />
+    if ((!detailsLoader && detailsError) || movieDetails == null) {
+        return (
+            <div className="bg-black min-h-screen">
+                <ErrorUI message={movieDetails == null && "We couldn't able to find the movie"} />
+            </div>
+        )
+    }
 
     return (
         <div className="bg-black text-white min-h-screen">

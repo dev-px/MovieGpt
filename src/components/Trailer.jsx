@@ -1,6 +1,7 @@
 import React from 'react'
 
 const Trailer = ({ trailerKey }) => {
+    console.log(trailerKey)
     return (
         <iframe
             className="w-screen aspect-video scale-150"

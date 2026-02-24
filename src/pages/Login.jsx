@@ -96,7 +96,7 @@ const Login = () => {
       <Background />
 
       {/* Form Wrapper */}
-      <div className="relative z-10 flex min-h-screen items-center justify-center px-4 sm:px-6 pt-24 z-50">
+      <div className="relative z-10 flex min-h-screen items-center justify-center px-4 sm:px-6 pt-24">
         <div className="w-full max-w-md rounded-sm bg-black/75 p-6 sm:p-8 md:p-10 text-white">
           <h1 className="mb-6 text-3xl sm:text-4xl font-bold">
             {isSignedUp ? `${translator(langPref, "Sign Up")}` : `${translator(langPref, "Sign In")}`}

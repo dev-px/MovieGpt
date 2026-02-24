@@ -1,8 +1,4 @@
-const ShimmerBlock = ({ className }) => (
-    <div
-        className={`bg-gray-800/60 animate-pulse rounded ${className}`}
-    />
-);
+import ShimmerBlock from "./ShimmerBlock";
 
 const MovieDetailsShimmer = () => {
     return (

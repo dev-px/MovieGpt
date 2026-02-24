@@ -5,12 +5,12 @@ import { movieIdValidator } from "../utils/Validate";
 const useIndividualMovieDetail = (movieId) => {
     const [movieDetails, setMovieDetails] = useState(null);
     const [detailsLoading, setDetailsLoading] = useState(false);
-    const [detailsError, setDetailsError] = useState(null);
+    const [detailsError, setDetailsError] = useState(false);
 
     useEffect(() => {
-        if (!movieId) return; // guard clause
+        if (!movieId) return;
         if (movieIdValidator(movieId)) {
-            setDetailsError("Invalid movie ID");
+            setDetailsError(true);
             return;
         }
 
@@ -22,20 +22,20 @@ const useIndividualMovieDetail = (movieId) => {
         const fetchMovieDetails = async () => {
             try {
                 setDetailsLoading(true);
-                setDetailsError(null);
+                setDetailsError(false);
 
                 const response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?language=en-US`,
                     { ...options, signal: controller.signal, }
                 );
-                console.log(response.ok)
 
-                if (!response.ok) throw new Error("Failed to fetch movie details");
+                if (!response.ok) throw new Error;
 
                 const data = await response.json();
                 setMovieDetails(data);
-                
+
             } catch (error) {
-                if (error.name !== "AbortError") setDetailsError(error.message);
+                if (error.name !== "AbortError") return;
+                setDetailsError(true);
             } finally {
                 setDetailsLoading(false);
             }

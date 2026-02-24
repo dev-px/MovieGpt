@@ -2,7 +2,7 @@ import React from 'react'
 
 const ErrorUI = ({ message = "Something went wrong." }) => {
     return (
-        <div className="min-h-[60vh] flex items-center justify-center px-4">
+        <div className="min-h-[80vh] flex items-center justify-center px-4">
             <div className="text-center max-w-md w-full bg-zinc-900 p-6 rounded-xl shadow-lg border border-zinc-800">
 
                 <div className="text-red-500 text-5xl mb-4">
@@ -46,9 +46,8 @@ export default ErrorUI;
 // - React-level crash
 // - Unexpected
 // - Defensive safety net
-// - Like a circuit breaker
 // if some component throws inside render lifecycle. That is a React rendering failure.
-// “React cannot safely render this tree.” --> Then ErrorBoundary catches it and shows fallback UI.
+// "React cannot safely render this tree." --> Then ErrorBoundary catches it and shows fallback UI.
 
 // ErrorBoundary does NOT catch:
 // - async errors
@@ -57,7 +56,7 @@ export default ErrorUI;
 // It only catches rendering errors.
 
 
-// ERROR UI ---------------->>>>>>>>>>>>>>>>>>>>>
+// ERROR UI ----------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 // API Error UI:
 // - Expected failure

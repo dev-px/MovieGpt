@@ -4,11 +4,11 @@ import TrailerBrowse from "../components/TrailerBrowse";
 import MovieBrowse from "../components/MovieBrowse";
 
 const Browse = () => {
-  const movieList = usePlayMovieAPI();
+  const { movie, pmError } = usePlayMovieAPI();
 
   return (
     <>
-      <TrailerBrowse movies={movieList} />
+      <TrailerBrowse movies={movie} pmError={pmError} />
       <MovieBrowse />
     </>
   );

@@ -7,20 +7,23 @@ import useTopRatedAPI from "../hooks/useTopRatedAPI";
 import { translateLang } from "../utils/Constant";
 
 const MovieBrowse = () => {
-  const movies = useSelector((state) => state?.movie?.movieList);
   const langPref = useSelector((state) => state?.appPrefernce.language);
   const transLang = translateLang[langPref];
-  const { upcomingMovie, upcomingLoading } = useUpcomingMovieAPI();
-  const { popularMovie, popularLoading } = usePopularAPI();
-  const { topRatedMovie, topRatedLoading } = useTopRatedAPI();
+
+  const browseMovie = useSelector((state) => state?.movie?.movieList);
+  const { upcomingMovie, upcomingLoading, uError } = useUpcomingMovieAPI();
+  const { popularMovie, popularLoading, pError } = usePopularAPI();
+  const { topRatedMovie, topRatedLoading, tError } = useTopRatedAPI();
+
   return (
     <>
       <div className="bg-black text-white flex flex-col gap-6 !pb-16">
-        {movies && (
+        {browseMovie && (
           <MovieBrowseCard
-            movie={movies}
+            movie={browseMovie}
             title={transLang?.["Browse Movies"]}
-            loading={movies?.length === 1}
+            loading={browseMovie?.length === 1}
+            error={browseMovie?.length === 1}
           />
         )}
         {popularMovie && (
@@ -28,6 +31,7 @@ const MovieBrowse = () => {
             movie={popularMovie}
             title={transLang?.["Popular Movies"]}
             loading={popularLoading}
+            error={pError}
           />
         )}
         {topRatedMovie && (
@@ -35,6 +39,7 @@ const MovieBrowse = () => {
             movie={topRatedMovie}
             title={transLang?.["Top Rated Movies"]}
             loading={topRatedLoading}
+            error={tError}
           />
         )}
         {upcomingMovie && (
@@ -42,6 +47,7 @@ const MovieBrowse = () => {
             movie={upcomingMovie}
             title={transLang?.["Upcoming Movies"]}
             loading={upcomingLoading}
+            error={uError}
           />
         )}
       </div>

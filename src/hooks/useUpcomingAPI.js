@@ -2,16 +2,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { addUpcomingMovieList } from "../utils/store/movieSlice";
 import { useEffect, useState } from "react";
 import apiClient from "../utils/API/apiClient";
-import { toast } from "react-toastify";
-import { toastVisibilty } from "../utils/Helper";
 
 const useUpcomingMovieAPI = () => {
   const dispatch = useDispatch();
   const [upcomingLoading, setUpcomingLoading] = useState(true);
+  const [uError, setUError] = useState(false);
   const movie = useSelector((state) => state?.movie?.upcomingMovieList);
 
   useEffect(() => {
     try {
+      setUError(false);
       const upcomingMovie = async () => {
         const res = await apiClient("upcoming?page=1");
         dispatch(addUpcomingMovieList(res?.results));
@@ -19,11 +19,11 @@ const useUpcomingMovieAPI = () => {
       };
       upcomingMovie();
     } catch (err) {
-      toast.error("Failed to load movie", toastVisibilty)
+      setUError(true)
     }
   }, [dispatch]);
 
-  return { upcomingMovie: movie, upcomingLoading };
+  return { upcomingMovie: movie, upcomingLoading, uError };
 };
 
 export default useUpcomingMovieAPI;
