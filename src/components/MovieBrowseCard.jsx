@@ -2,6 +2,7 @@ import React from "react";
 import Shimmer from "./Shimmer";
 import { translator } from './../utils/Helper';
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const MovieBrowseCard = ({ movie, title, showName = false, loading = true }) => {
   const langPref = useSelector((state) => state?.appPrefernce.language);
@@ -9,11 +10,11 @@ const MovieBrowseCard = ({ movie, title, showName = false, loading = true }) => 
   return (
     <div className="!px-12">
       <h1 className="text-2xl font-bold !pb-1.5 text-white">{showName && <span>{translator(langPref, "Search Results")}:</span>}{title}{showName && <span>"</span>}</h1>
-      <div className="px-8 flex gap-4 overflow-x-scroll hide-scrollbar">
+      <div className="flex gap-4 overflow-x-scroll hide-scrollbar">
         {loading ? <Shimmer />
           : (
             movie && movie.map((ele) => (
-              <div key={ele.id} className="flex flex-col items-center">
+              <Link to={`/movie/${ele.title}/${ele.id}`} key={ele.id}>
                 <div className="min-w-[150px] h-[200px] bg-gray-700 rounded-md flex-shrink-0">
                   <img
                     src={`https://image.tmdb.org/t/p/w500${ele.poster_path}`}
@@ -26,7 +27,7 @@ const MovieBrowseCard = ({ movie, title, showName = false, loading = true }) => 
                     {ele?.title}
                   </p>
                 )}
-              </div>
+              </Link>
             ))
           )}
       </div>

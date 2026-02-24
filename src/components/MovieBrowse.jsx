@@ -16,15 +16,13 @@ const MovieBrowse = () => {
   return (
     <>
       <div className="bg-black text-white flex flex-col gap-6 !pb-16">
-        <div className="!-mt-20 z-10">
-          {movies && (
-            <MovieBrowseCard
-              movie={movies}
-              title={transLang?.["Browse Movies"]}
-              loading={movies?.length === 1}
-            />
-          )}
-        </div>
+        {movies && (
+          <MovieBrowseCard
+            movie={movies}
+            title={transLang?.["Browse Movies"]}
+            loading={movies?.length === 1}
+          />
+        )}
         {popularMovie && (
           <MovieBrowseCard
             movie={popularMovie}

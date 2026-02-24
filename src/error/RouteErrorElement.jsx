@@ -29,6 +29,6 @@ export default RouteErrorElement;
 
 
 // Route-level failure → errorElement
-// Component crash → ErrorBoundary
+// Component crash → AppErrorBoundary
 // API failure → try/catch + toast
 // Auth failure → ProtectedLayout(AuthWrapper)

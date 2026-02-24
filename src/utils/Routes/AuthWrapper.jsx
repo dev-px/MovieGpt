@@ -15,7 +15,7 @@ export default function AuthLayout() {
         const unsub = onAuthStateChanged(auth, (user) => {
             if (user) {
                 dispatch(addUserInfo({ email: user.email, name: user.displayName }));
-                navigate("/browse");
+                // navigate("/browse");
             } else {
                 dispatch(removeUserInfo());
                 dispatch(resetMovieSate());

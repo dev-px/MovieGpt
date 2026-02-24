@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { options } from "../utils/Constant";
 import { addPopularMovieList } from "../utils/store/movieSlice";
+import apiClient from "../utils/API/apiClient";
+import { toastVisibilty } from "../utils/Helper";
+import { toast } from "react-toastify";
 
 const usePopularAPI = () => {
   const dispatch = useDispatch();
@@ -9,17 +11,19 @@ const usePopularAPI = () => {
   const movie = useSelector((state) => state?.movie?.popularMovieList);
 
   useEffect(() => {
-    const popularMovie = async () => {
-      const data = await fetch(
-        "https://api.themoviedb.org/3/movie/popular?page=1",
-        options
-      );
-      const movieData = await data.json();
-      dispatch(addPopularMovieList(movieData?.results));
-      if (movieData) setPopularLoading(false);
-    };
-    popularMovie();
+    try {
+      const popularMovie = async () => {
+        const res = await apiClient("popular?page=1")
+        dispatch(addPopularMovieList(res?.results));
+        if (res) setPopularLoading(false);
+      }
+      popularMovie();
+    } catch (err) {
+      toast.error("Failed to load the movie", toastVisibilty);
+    }
+
   }, [dispatch]);
+
 
   return { popularMovie: movie, popularLoading };
 };

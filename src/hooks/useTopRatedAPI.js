@@ -1,7 +1,9 @@
-import { options } from "../utils/Constant";
 import { useDispatch, useSelector } from "react-redux";
 import { addTopRatedMovieList } from "../utils/store/movieSlice";
 import { useEffect, useState } from "react";
+import apiClient from "../utils/API/apiClient";
+import { toast } from "react-toastify";
+import { toastVisibilty } from "../utils/Helper";
 
 const useTopRatedAPI = () => {
   const dispatch = useDispatch();
@@ -9,16 +11,16 @@ const useTopRatedAPI = () => {
   const movie = useSelector((state) => state?.movie?.topRatedMovieList);
 
   useEffect(() => {
-    const topRatedMovie = async () => {
-      const data = await fetch(
-        "https://api.themoviedb.org/3/movie/top_rated?page=1",
-        options
-      );
-      const movieData = await data.json();
-      dispatch(addTopRatedMovieList(movieData?.results));
-      if (movieData) setTopRatedLoading(false);
-    };
-    topRatedMovie();
+    try {
+      const topRatedMovie = async () => {
+        const res = await apiClient("top_rated?page=1")
+        dispatch(addTopRatedMovieList(res?.results));
+        if (res) setTopRatedLoading(false);
+      };
+      topRatedMovie();
+    } catch (err) {
+      toast.error("Failed to load the movie", toastVisibilty);
+    }
   }, [dispatch]);
 
   return { topRatedMovie: movie, topRatedLoading };

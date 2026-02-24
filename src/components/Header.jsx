@@ -44,44 +44,45 @@ const Header = () => {
 
   // hide gpt search button on browse page only
   useEffect(() => {
-    pathname === "/browse" ? setGptButtonHide(true) : setGptButtonHide(false);
+    pathname === "/login" ? setGptButtonHide(false) : setGptButtonHide(true);
   }, [pathname]);
 
   return (
-    <header className="absolute bg-gradient-to-b from-black to-transparent w-full z-50">
-      <div className="flex justify-between items-center">
+    <header className="absolute bg-gradient-to-b from-black to-transparent w-full z-50" >
+      <div className="flex flex-col sm:flex-row justify-between items-center px-4 sm:px-8 lg:px-12 py-3 gap-3 sm:gap-0">
 
         {/* Netflix Logo */}
-        <img
-          src={NTLFX_Logo}
-          alt="Netflix Logo"
-          className="h-22 !ml-12 hover:cursor-pointer"
-          onClick={handleLogoClick}
-        />
+        <h1 className="text-red-600 font-extrabold text-xl sm:text-2xl cursor-pointer" onClick={handleLogoClick}>
+          MovieGpt
+        </h1>
 
-        <div className="flex items-center gap-4 !mr-16">
-          {user && user.length != 0 && (
-            <div className="flex items-center gap-4">
-              {gptButtonHide ? (
-                <div>
-                  <button
-                    className="border border-white text-white font-medium !px-2.5 !py-1.5 rounded-md ml-4 hover:bg-white hover:text-black hover:cursor-pointer"
-                    onClick={() => navigate("/search")}
-                  >
-                    {translator(langPref, "AI Recommendation")}
-                  </button>
-                </div>
-              ) : null}
+        <div className="flex flex-wrap items-center justify-center sm:justify-end gap-3 sm:gap-4 relative">
+
+          {user && user.length !== 0 && (
+            <div className="flex items-center gap-3 sm:gap-4">
+
+              {gptButtonHide && (
+                <button
+                  className="border border-white text-white text-sm sm:text-base px-3 py-1.5 rounded-md hover:bg-white hover:text-black transition"
+                  onClick={() => navigate("/search")}
+                >
+                  {translator(langPref, "AI Recommendation")}
+                </button>
+              )}
+
+              {/* Profile */}
               <div
-                className="text-white font-bold hover:cursor-pointer relative flex gap-1 items-center"
+                className="text-white font-bold cursor-pointer relative flex gap-1 items-center text-sm sm:text-base"
                 onClick={() => setShowProfileDropdown(!showProfileDropdown)}
               >
-                {user?.name} <div className="text-xs">{"∨"}</div>
+                {user?.name}
+                <span className="text-xs">∨</span>
               </div>
+
               {showProfileDropdown && (
                 <div
                   onClick={handleSignOut}
-                  className="hover:cursor-pointer bg-white text-black text-sm rounded-sm !px-2 !py-1 font-semibold hover:opacity-70 transition absolute top-16 right-32 "
+                  className="absolute top-10 right-1/4 bg-white text-black text-sm rounded-sm px-3 py-1 font-semibold hover:opacity-80 transition"
                 >
                   {translator(langPref, "Sign Out")}
                 </div>
@@ -89,18 +90,19 @@ const Header = () => {
             </div>
           )}
 
-
           {/* Language Selection */}
           <select
-            className="text-white font-bold p-1 !border-0 outline-0 hover:cursor-pointer"
+            className="text-white bg-transparent font-bold p-1 border border-white rounded-md text-sm sm:text-base cursor-pointer"
             value={langPref}
-            onChange={(e) => dispatch(setUserPreferredLanguage(e.target.value))}
+            onChange={(e) =>
+              dispatch(setUserPreferredLanguage(e.target.value))
+            }
           >
             {Object.entries(lang).map(([key, value]) => (
               <option
                 key={`${key}-${value}`}
                 value={key}
-                className="text-white bg-black hover:cursor-pointer"
+                className="text-black"
               >
                 {value}
               </option>
@@ -109,6 +111,7 @@ const Header = () => {
         </div>
       </div>
     </header>
+
   );
 };
 
