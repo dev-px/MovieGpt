@@ -2,7 +2,7 @@ import ShimmerBlock from "./ShimmerBlock";
 
 const MovieDetailsShimmer = () => {
     return (
-        <div className="bg-black text-white min-h-screen">
+        <div className="bg-black text-yellow-500 min-h-screen">
 
             {/* HERO SHIMMER */}
             <div className="relative h-[50vh] sm:h-[75vh] md:h-[85vh] w-full overflow-hidden">

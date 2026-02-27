@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { translator } from "../utils/Helper";
 import { useNavigate } from "react-router-dom";
 import ShimmerBlock from "./ShimmerBlock";
+import { IoInformationCircle } from "react-icons/io5";
 
 const TrailerText = ({ loading }) => {
   const navigate = useNavigate();
@@ -20,14 +21,17 @@ const TrailerText = ({ loading }) => {
             <ShimmerBlock className="h-6 w-[350px]" />
           </div>
         </> : <>
-          <h1 className="md:text-4xl sm:text-xl font-bold text-white">{movieData?.title}</h1>
+          <h1 className="md:text-4xl sm:text-xl font-bold text-yellow-500">{movieData?.title}</h1>
           <div className="min-h-1/6 md:block hidden">
-            <p className="w-1/2 text-white !font-light text-wrap text-sm">{movieData?.overview}</p>
+            <p className="w-1/2 text-zinc-200 text-wrap text-sm font-medium">{movieData?.overview}</p>
           </div>
           <div className="w-1/2">
-            <button className="cursor-pointer bg-gray-500 opacity-60 hover:opacity-90 bg-blend-color text-black rounded-sm !px-4 !py-1 font-semibold transition"
+            <button className="cursor-pointer bg-yellow-200 opacity-60 hover:opacity-90 bg-blend-color text-black rounded-sm !px-4 !py-1 font-semibold whitespace-nowrap text-nowrap"
               onClick={() => navigate(`/movie/${movieData?.title}/${movieData?.id}`)}>
-              {translator(langPref, "More Info")}
+              <span className="flex items-center justify-center gap-1">
+                <IoInformationCircle />
+                {translator(langPref, "More Info")}
+              </span>
             </button>
           </div>
         </>}

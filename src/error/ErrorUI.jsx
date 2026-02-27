@@ -5,36 +5,24 @@ const ErrorUI = ({ message = "Something went wrong." }) => {
         <div className="min-h-[80vh] flex items-center justify-center px-4">
             <div className="text-center max-w-md w-full bg-zinc-900 p-6 rounded-xl shadow-lg border border-zinc-800">
 
-                <div className="text-red-500 text-5xl mb-4">
+                <div className="text-yellow-400 text-5xl mb-4">
                     ⚠️
                 </div>
 
-                <h2 className="text-xl font-semibold mb-2 text-white">
+                <h2 className="text-xl font-semibold mb-2 text-yellow-500">
                     Oops!
                 </h2>
 
                 <p className="text-gray-400 mb-6 text-sm">
                     {message}
                 </p>
-
-                <div className="flex gap-3 justify-center">
-                    {/* {onRetry && (
-                        <button
-                            onClick={onRetry}
-                            className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition"
-                        >
-                            Try Again
-                        </button>
-                    )} */}
-
-                    <button
-                        onClick={() => window.location.href = "/"}
-                        className="px-4 py-2 bg-zinc-700 hover:bg-zinc-600 text-white rounded-lg transition"
-                    >
-                        Go Home
-                    </button>
-                </div>
-
+                ==
+                <button
+                    onClick={() => window.location.href = "/"}
+                    className="px-4 py-2 bg-zinc-700 hover:bg-zinc-600 text-yellow-500 rounded-lg transition"
+                >
+                    Go Home
+                </button>
             </div>
         </div>
     );

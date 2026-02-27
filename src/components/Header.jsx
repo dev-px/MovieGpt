@@ -3,12 +3,13 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { auth } from "../utils/API/firebase";
 import { removeUserInfo } from "../utils/store/userSlice";
-import { lang, NTLFX_Logo } from './../utils/Constant';
+import { lang } from './../utils/Constant';
 import { useLocation, useNavigate } from "react-router-dom";
 import { setUserPreferredLanguage } from "../utils/store/appPrefernceSlice";
 import { resetMovieSate } from "../utils/store/movieSlice";
 import { toast } from "react-toastify";
 import { toastVisibilty, translator } from "../utils/Helper";
+import { IoIosArrowDown } from "react-icons/io";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -52,7 +53,7 @@ const Header = () => {
       <div className="flex flex-col sm:flex-row justify-between items-center px-4 sm:px-8 lg:px-12 py-3 gap-3 sm:gap-0">
 
         {/* Netflix Logo */}
-        <h1 className="text-red-600 font-extrabold text-xl sm:text-2xl cursor-pointer" onClick={handleLogoClick}>
+        <h1 className="text-yellow-500 font-extrabold text-xl sm:text-2xl cursor-pointer" onClick={handleLogoClick}>
           MovieGpt
         </h1>
 
@@ -63,7 +64,7 @@ const Header = () => {
 
               {gptButtonHide && (
                 <button
-                  className="border border-white text-white text-sm sm:text-base px-3 py-1.5 rounded-md hover:bg-white hover:text-black transition"
+                  className="border font-medium border-yellow-500 cursor-pointer text-yellow-500 text-sm sm:text-base px-3 py-1.5 rounded-md hover:bg-yellow-500 hover:text-black transition"
                   onClick={() => navigate("/search")}
                 >
                   {translator(langPref, "AI Recommendation")}
@@ -72,17 +73,17 @@ const Header = () => {
 
               {/* Profile */}
               <div
-                className="text-white font-bold cursor-pointer relative flex gap-1 items-center text-sm sm:text-base"
+                className="text-yellow-500 font-medium cursor-pointer relative text-sm sm:text-base flex justify-center items-center gap-1"
                 onClick={() => setShowProfileDropdown(!showProfileDropdown)}
               >
-                {user?.name}
-                <span className="text-xs">∨</span>
+                <span>{user?.name}</span>
+                <span className="text-xs"><IoIosArrowDown className="text-yellow-500 font-bold" /></span>
               </div>
 
               {showProfileDropdown && (
                 <div
                   onClick={handleSignOut}
-                  className="absolute top-10 right-1/4 bg-white text-black text-sm rounded-sm px-3 py-1 font-semibold hover:opacity-80 transition"
+                  className="absolute top-10 right-1/4 bg-yellow-500 text-black text-sm rounded-sm px-3 py-1 font-semibold hover:opacity-80 transition cursor-pointer"
                 >
                   {translator(langPref, "Sign Out")}
                 </div>
@@ -92,7 +93,7 @@ const Header = () => {
 
           {/* Language Selection */}
           <select
-            className="text-white bg-transparent font-bold p-1 border border-white rounded-md text-sm sm:text-base cursor-pointer"
+            className="text-yellow-500 bg-transparent font-medium p-1 border border-yellow-500 rounded-md text-sm sm:text-base cursor-pointer"
             value={langPref}
             onChange={(e) =>
               dispatch(setUserPreferredLanguage(e.target.value))

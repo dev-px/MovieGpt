@@ -6,8 +6,8 @@ const RouteErrorElement = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="min-h-screen flex flex-col gap-4 items-center justify-center bg-black text-white px-6 text-center">
-            <h1 className="text-5xl font-bold text-red-600">
+        <div className="min-h-screen flex flex-col gap-4 items-center justify-center bg-black text-yellow-500 px-6 text-center">
+            <h1 className="text-5xl font-bold text-yellow-500">
                 Something Went Wrong
             </h1>
 
@@ -17,7 +17,7 @@ const RouteErrorElement = () => {
 
             <button
                 onClick={() => navigate("/")}
-                className="bg-red-600 hover:bg-red-700 px-6 py-2 rounded-md font-semibold transition"
+                className="bg-yellow-500 hover:bg-yellow-600 px-6 py-2 rounded-md font-semibold transition"
             >
                 Go Home
             </button>

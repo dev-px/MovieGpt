@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { signInValidation } from "../utils/Validate";
+import { userDetailsValidation } from "../utils/Validate";
 import { auth } from "../utils/API/firebase";
 import {
   createUserWithEmailAndPassword,
@@ -26,13 +26,14 @@ const Login = () => {
 
   // toggle between sign in and sign up form
   const handleSignUp = () => {
+    setErrorMessage(null);
     setIsSignedUp(!isSignedUp);
   };
 
   // handle form submission for both sign in and sign up
   const handleSubmit = (event) => {
     event.preventDefault();
-    const err = signInValidation(email.current.value, password.current.value);
+    const err = userDetailsValidation(email.current.value, password.current.value);
     setErrorMessage(err);
     if (err) return;
     setBtnLoading(true);
@@ -97,7 +98,7 @@ const Login = () => {
 
       {/* Form Wrapper */}
       <div className="relative z-10 flex min-h-screen items-center justify-center px-4 sm:px-6 pt-24">
-        <div className="w-full max-w-md rounded-sm bg-black/75 p-6 sm:p-8 md:p-10 text-white">
+        <div className="w-full max-w-md rounded-sm bg-black/75 p-6 sm:p-8 md:p-10 text-yellow-500">
           <h1 className="mb-6 text-3xl sm:text-4xl font-bold">
             {isSignedUp ? `${translator(langPref, "Sign Up")}` : `${translator(langPref, "Sign In")}`}
           </h1>
@@ -110,7 +111,7 @@ const Login = () => {
                 type="text"
                 ref={fullName}
                 placeholder="John Doe"
-                className="text-white placeholder-gray-400 outline w-full rounded-sm bg-black/80 p-3 outline-gray-500 focus:outline-2 focus:outline-white"
+                className="text-yellow-500 placeholder-gray-400 outline w-full rounded-sm bg-black/80 p-3 outline-gray-500 focus:outline-2 focus:outline-white"
               />
             )}
 
@@ -121,10 +122,10 @@ const Login = () => {
                 type="email"
                 ref={email}
                 placeholder="john.doe@example.com"
-                className="bg-black/80 p-3 text-white w-full rounded-sm placeholder-gray-400 outline outline-gray-500 focus:outline-2 focus:outline-white"
+                className="bg-black/80 p-3 text-yellow-500 w-full rounded-sm placeholder-gray-400 outline outline-gray-500 focus:outline-2 focus:outline-white"
               />
               {errorMessage?.email && (
-                <p className="mt-1 text-sm font-semibold text-red-600">
+                <p className="mt-1 text-sm font-semibold text-red-500">
                   {errorMessage.email}
                 </p>
               )}
@@ -137,10 +138,10 @@ const Login = () => {
                 type="password"
                 ref={password}
                 placeholder="●●●●●●●●●●"
-                className="w-full rounded-sm bg-black/80 p-3 text-white placeholder-gray-400 outline outline-gray-500 focus:outline-2 focus:outline-white"
+                className="w-full rounded-sm bg-black/80 p-3 text-yellow-500 placeholder-gray-400 outline outline-gray-500 focus:outline-2 focus:outline-white"
               />
               {errorMessage?.password && (
-                <p className="mt-1 text-sm font-semibold text-red-600">
+                <p className="mt-1 text-sm font-semibold text-red-500">
                   {errorMessage.password}
                 </p>
               )}
@@ -150,9 +151,9 @@ const Login = () => {
             {/* Action button sign-up / sign-in */}
             <button
               type="submit"
-              className={`mt-4 w-full rounded-sm bg-red-600 p-3 font-semibold hover:bg-red-700  ${btnLoading
-                ? "bg-red-600/80 cursor-not-allowed"
-                : "bg-red-600 hover:bg-red-800 cursor-pointer"
+              className={`mt-4 w-full rounded-sm text-black bg-yellow-500 p-3 font-semibold hover:bg-yellow-600  ${btnLoading
+                ? "bg-yellow-500/80 cursor-not-allowed"
+                : "bg-yellow-500 hover:bg-yellow-600 cursor-pointer"
                 }`}
               disabled={btnLoading}
             >
@@ -187,7 +188,7 @@ const Login = () => {
           <p className="mt-6 text-sm text-gray-300">
             {isSignedUp ? `${translator(langPref, "Already have an account?")}` : `${translator(langPref, "New to Netflix?")}`}{" "}
             <span
-              className="cursor-pointer font-semibold text-white hover:underline"
+              className="cursor-pointer font-semibold text-yellow-500 hover:underline"
               onClick={handleSignUp}
             >
               {isSignedUp ? `${translator(langPref, "Sign in now")}` : `${translator(langPref, "Sign up now.")}`}

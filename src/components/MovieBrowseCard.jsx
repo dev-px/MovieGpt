@@ -9,7 +9,7 @@ const MovieBrowseCard = ({ movie, title, showName = false, loading = true, error
 
   return (
     <div className="!px-12">
-      <h1 className="text-2xl font-bold !pb-1.5 text-white">{showName && <span>{translator(langPref, "Search Results")}:</span>}{title}{showName && <span>"</span>}</h1>
+      <h1 className="text-2xl font-bold !pb-1.5 text-yellow-500">{showName && <span>{translator(langPref, "Search Results")}</span>}{title}{showName && <span>"</span>}</h1>
       <div className="flex gap-4 overflow-x-scroll hide-scrollbar min-h-[200px] items-center">
         {/* section wise API error handling */}
         {loading ?
@@ -30,11 +30,6 @@ const MovieBrowseCard = ({ movie, title, showName = false, loading = true, error
                     className="w-full h-full !object-cover rounded-md"
                   />
                 </div>
-                {showName && (
-                  <p className="text-white font-semibold capitalize text-center !mt-2 !px-2 text-lg">
-                    {ele?.title}
-                  </p>
-                )}
               </Link>
             ))
           )}

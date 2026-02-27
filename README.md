@@ -37,7 +37,7 @@ MovieGpt helps users discover movies via curated lists (Now Playing, Popular, To
   - Route definitions in Routes/routes.jsx
 
 - UX / UI
-  - Dark, responsive Netflix-like design (components: Header, Background, MovieBrowse, MovieBrowseCard)
+  - Dark, responsive Tmdb-like design (components: Header, Background, MovieBrowse, MovieBrowseCard, MovieDetails Page)
   - Toast notifications (Toast.jsx)
   - Error boundary components for graceful error UI (error/)
 
@@ -46,17 +46,34 @@ MovieGpt helps users discover movies via curated lists (Now Playing, Popular, To
   - Helper utilities in utils/ (Constant.js, Helper.js, Validate.js)
   - Firebase config in utils/API/firebase.js
 
+- Error Handling
+  - Global ErrorBoundary for unexpected render crashes
+  - Route-level errorElement + dedicated 404 page
+  - Full-page ErrorUI for critical missing data (e.g., invalid movieId)
+  - Section-level UI (BannerFallback) and API error isolation (one failure doesn’t break entire page)
+  - Controlled loading/error states via custom hooks
+  - Toast notifications for action-based user feedback
+
+- Shimmer UI
+  - Skeleton loaders across the app for improved perceived performance
+  - Prevents layout shift during async data fetching
+  - Section-based shimmer rendering for smoother UX
+
+
 ---
 
 ## Project structure (relevant)
 src/
 - App.jsx, main.jsx
 - assets/
-- components/ (Background, Header, MovieBrowse, MovieBrowseCard, Shimmer, Toast, TrailerBrowse, TrailerText)
-- pages/ (Browse, GptSearch, Login, ForgotPassword, NotFound)
+- components/ (Background, Header, MovieBrowse, MovieBrowseCard, Shimmer, Toast, TrailerBrowse, TrailerText, Trailer, Toast)
+- components/shimmer (Shimmer, ShimmerBlock, MovieDetailsShimmer)
+- pages/ (Browse, GptSearch, Login, ForgotPassword, NotFound, MovieDetails)
 - hooks/ (API hooks & Gemini search)
 - utils/ (API, Routes, Helper, Validate)
 - store/ (slices and appStore)
+- error/ (AppErrorBoundary, BannerFallbackUI, ErrorUI, RouteErrorElement)
+
 
 ---
 
@@ -70,15 +87,7 @@ src/
 - Vite build tool
 - Tailwind CSS (styling utilities)
 - React Toastify (notifications)
-
----
-
-## Responsive & accessibility notes (for revision / interview talking points)
-- Mobile-first layout with horizontal scrolling lists for small screens
-- Trailer embeds and banners scale using responsive containers
-- Visual contrast and focusable interactive elements (headers, cards)
-- Shimmer loading states improve perceived performance
-- Error boundaries and inline validation improve robustness
+- React Icons
 
 ---
 
@@ -98,8 +107,6 @@ src/
 
 ## Future improvements (short list)
 - Forgot-password flow & email flows
-- Movie details modal (cast, synopsis, reviews)
-- Favorites/watchlist persistence per user
 - More robust i18n and accessibility audits
 - Unit + integration tests for hooks and slices
 

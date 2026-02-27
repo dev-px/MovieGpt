@@ -38,10 +38,17 @@ export const translateLang = {
     "Trending Movies": "Trending Movies",
     "Watch Now": "Watch Now",
     "More Info": "More Info",
-    "Searching": "Searching...",
+    "Searching": "Searching",
     "Loading": "Loading...",
     "Search Results": "Search Results:",
     "AI Recommendation": "AI Recommendation",
+    "Play": "Play", 
+    "Overview": "Overview",
+    "Release Date": "Release Date",
+    "Runtime": "Runtime",
+    "Language": "Language",
+    "Rating": "Rating",
+    "Production": "Production"
   },
   hi: {
     "Sign In": "साइन इन करें",
@@ -69,9 +76,16 @@ export const translateLang = {
     "Trending Movies": "प्रवृत्त फिल्में",
     "Watch Now": "अभी देखें",
     "More Info": "अधिक जानकारी",
-    "Searching...": "खोज रहा है...",
+    "Searching...": "खोज रहा है",
     "Loading...": "लोड हो रहा है...",
     "Search Results": "खोज परिणाम:",
-    "AI Recommendation": "AI अनुशंसा"
+    "AI Recommendation": "AI अनुशंसा",
+    "Play": "चलाएं",
+    "Overview":" अवलोकन",
+    "Release Date": "रिलीज़ की तारीख",
+    "Runtime": "समय",
+    "Language": "भाषा",
+    "Rating": "रेटिंग",
+    "Production": "उत्पादन"
   },
 };

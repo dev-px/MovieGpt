@@ -17,7 +17,7 @@ const MovieBrowse = () => {
 
   return (
     <>
-      <div className="bg-black text-white flex flex-col gap-6 !pb-16">
+      <div className="bg-black text-yellow-500 flex flex-col gap-6 !pb-16">
         {browseMovie && (
           <MovieBrowseCard
             movie={browseMovie}
