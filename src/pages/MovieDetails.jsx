@@ -11,8 +11,6 @@ import { IoIosStar } from "react-icons/io";
 import { translator } from "../utils/Helper";
 import { useSelector } from "react-redux";
 
-// handle login logic
-
 const MovieDetails = () => {
     const { movieId } = useParams();
     const langPref = useSelector((state) => state?.appPrefernce.language);
