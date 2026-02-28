@@ -3,7 +3,7 @@ import TrailerText from "./TrailerText";
 import useTrailerAPI from "../hooks/useTrailerAPI";
 import Trailer from "./Trailer";
 import useTrailerPlayAPI from "../hooks/useTrailerPlayAPI"
-import ShimmerBlock from "./ShimmerBlock";
+import ShimmerBlock from "./shimmer/ShimmerBlock";
 import BannerFallBackUI from "../error/BannerFallBackUI";
 
 const TrailerBrowse = ({ movies, pmError }) => {

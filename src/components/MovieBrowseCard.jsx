@@ -1,8 +1,8 @@
 import React from "react";
-import Shimmer from "./Shimmer";
 import { translator } from './../utils/Helper';
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import Shimmer from "./shimmer/Shimmer"
 
 const MovieBrowseCard = ({ movie, title, showName = false, loading = true, error = null }) => {
   const langPref = useSelector((state) => state?.appPrefernce.language);

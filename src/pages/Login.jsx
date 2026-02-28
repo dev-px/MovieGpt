@@ -5,6 +5,9 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   updateProfile,
+  setPersistence,
+  browserLocalPersistence,
+  browserSessionPersistence,
 } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { addUserInfo } from "../utils/store/userSlice";
@@ -17,6 +20,7 @@ const Login = () => {
   const [isSignedUp, setIsSignedUp] = useState(false);
   const [btnLoading, setBtnLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [rememberMe, setRememberMe] = useState(false);
   const langPref = useSelector((state) => state?.appPrefernce.language);
   const dispatch = useDispatch();
   const fullName = useRef(null);
@@ -31,64 +35,62 @@ const Login = () => {
   };
 
   // handle form submission for both sign in and sign up
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const err = userDetailsValidation(email.current.value, password.current.value);
+
+    const err = userDetailsValidation(
+      email.current.value,
+      password.current.value
+    );
+
     setErrorMessage(err);
     if (err) return;
+
     setBtnLoading(true);
-    if (isSignedUp) {
-      // sign up flow
-      createUserWithEmailAndPassword(
-        auth,
-        email.current.value,
-        password.current.value,
-      ).then(() => {
-        // update profile with full name after successful sign up
-        updateProfile(auth.currentUser, {
-          displayName: fullName.current.value,
-        }).then(() => {
-          const { email, displayName } = auth.currentUser;
-          dispatch(addUserInfo({ email: email, name: displayName }));
-          toast.success("Account created successfully", toastVisibilty);
-        })
-          .catch(() => {
-            toast.error("Failed to update profile", toastVisibilty);
-          })
-          .finally(() => {
-            setBtnLoading(false);
-            setErrorMessage(null);
-            setIsSignedUp(false);
-          })
-      })
-        .catch(() => {
-          toast.error("Failed to create account", toastVisibilty);
-        })
-        .finally(() => {
-          setBtnLoading(false);
-          setErrorMessage(null);
-          setIsSignedUp(false);
-        });
-    }
-    else {
-      // sign in flow
-      signInWithEmailAndPassword(
-        auth,
-        email.current.value,
-        password.current.value,
-      ).then((userCredential) => {
+
+    try {
+      if (isSignedUp) {
+        // Sign up functionality
+        const userCredential = await createUserWithEmailAndPassword(auth, email.current.value, password.current.value);
+
+        // Update profile with display name
+        await updateProfile(userCredential.user, { displayName: fullName.current.value || "User" });
+
+        const { email: userEmail, displayName } = userCredential.user;
+        dispatch(addUserInfo({ email: userEmail, name: displayName, })
+        );
+
+        toast.success("Account created successfully", toastVisibilty);
+
+        setIsSignedUp(false);
+      } else {
+        // Sign in functionality
+
+        // Set persistence BEFORE login
+        await setPersistence(auth, rememberMe ? browserLocalPersistence : browserSessionPersistence);
+
+        const userCredential = await signInWithEmailAndPassword(auth, email.current.value, password.current.value);
+
         const user = userCredential.user;
-        toast.success(`Welcome back ${user.displayName}`, toastVisibilty);
-      })
-        .catch(() => {
-          toast.error("Invalid email or password", toastVisibilty);
-        })
-        .finally(() => {
-          setBtnLoading(false);
-          setErrorMessage(null);
-        });
+
+        toast.success(`Welcome back ${user.displayName || ""}`, toastVisibilty);
+      }
+
+      setErrorMessage(null);
+
+    } catch (error) {
+      console.error("Auth Error:", error);
+
+      if (isSignedUp) {
+        toast.error("Failed to create account", toastVisibilty);
+      } else {
+        toast.error("Invalid email or password", toastVisibilty);
+      }
+    } finally {
+      setBtnLoading(false);
     }
   };
+
 
   return (
     <div className="relative min-h-screen w-full">
@@ -177,6 +179,7 @@ const Login = () => {
               type="checkbox"
               id="remember"
               className="cursor-pointer h-4 w-4 accent-white"
+              onChange={(e) => setRememberMe(e.target.checked)}
             />
             <label htmlFor="remember" className="cursor-pointer">
               {translator(langPref, "Remember me")}

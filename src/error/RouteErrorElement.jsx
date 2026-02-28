@@ -17,7 +17,7 @@ const RouteErrorElement = () => {
 
             <button
                 onClick={() => navigate("/")}
-                className="bg-yellow-500 hover:bg-yellow-600 px-6 py-2 rounded-md font-semibold transition"
+                className="bg-yellow-500 text-black hover:bg-yellow-600 px-6 py-2 rounded-md font-semibold transition"
             >
                 Go Home
             </button>

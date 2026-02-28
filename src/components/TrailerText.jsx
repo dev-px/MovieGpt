@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { translator } from "../utils/Helper";
 import { useNavigate } from "react-router-dom";
-import ShimmerBlock from "./ShimmerBlock";
+import ShimmerBlock from "./shimmer/ShimmerBlock";
 import { IoInformationCircle } from "react-icons/io5";
 
 const TrailerText = ({ loading }) => {
